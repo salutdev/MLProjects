@@ -5,6 +5,9 @@ import numpy as np
 
 class NNGradientDescent:
 
+    #activation_function = 'tanh'
+    activation_function = 'ReLU'
+
     def calculate_params(self, x1, x2, y):
 
         X = np.row_stack((x1, x2))
@@ -18,8 +21,14 @@ class NNGradientDescent:
         X_norm = np.linalg.norm(X, axis=1, keepdims=True)
         X = X / X_norm
 
-        learning_rate = 0.5
-        num_iterations = 100000
+        # For ReLU
+        learning_rate = 0.4
+        num_iterations = 200000
+
+        # For tanh
+        # learning_rate = 0.5
+        # num_iterations = 100000
+
         n_h = 4
 
         parameters = self.nn_model(X, Y, n_h, num_iterations, learning_rate)
@@ -52,7 +61,7 @@ class NNGradientDescent:
         W1, b1, W2, b2 = parameters["W1"], parameters["b1"], parameters["W2"], parameters["b2"]
 
         Z1 = np.dot(W1, X) + b1
-        A1 = np.tanh(Z1)
+        A1 = NNGradientDescent.activate(Z1)
         Z2 = np.dot(W2, A1) + b2
         A2 = Utils.sigmoid(Z2)
 
@@ -66,6 +75,17 @@ class NNGradientDescent:
 
         return A2, cache
 
+    @staticmethod
+    def activate(Z):
+        if NNGradientDescent.activation_function == 'tanh':
+            A = np.tanh(Z)
+        elif NNGradientDescent.activation_function == 'ReLU':
+            A = np.where(Z > 0, Z, 0)
+        else:
+            A = Z
+
+        return A
+
     def backward_propagation(self, parameters, cache, X, Y):
 
         m = X.shape[1]
@@ -75,11 +95,14 @@ class NNGradientDescent:
 
         A1 = cache["A1"]
         A2 = cache["A2"]
+        Z1 = cache["Z1"]
 
         dZ2 = A2 - Y
         dW2 = 1/m * np.dot(dZ2, A1.T)
         db2 = 1/m * np.sum(dZ2, axis=1, keepdims=True)
-        dZ1 = np.multiply(np.dot(W2.T, dZ2), (1-np.power(A1, 2)))
+        #dZ1 = np.multiply(np.dot(W2.T, dZ2), (1-np.power(A1, 2)))
+        derivative = self.activation_derivative(Z1, A1)
+        dZ1 = np.multiply(np.dot(W2.T, dZ2), derivative)
         dW1 = 1/m * np.dot(dZ1, X.T)
         db1 = 1/m * np.sum(dZ1, axis=1, keepdims=True)
 
@@ -91,6 +114,16 @@ class NNGradientDescent:
             }
 
         return grads
+
+    def activation_derivative(self, Z, A):
+        if NNGradientDescent.activation_function == 'tanh':
+            g_prime = (1-np.power(A, 2))
+        elif NNGradientDescent.activation_function == 'ReLU':
+            g_prime = np.where(Z < 0, 0, 1)
+        else:
+            g_prime = A
+
+        return g_prime
 
     def update_parameters(self, parameters, grads, learning_rate):
 

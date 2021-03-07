@@ -52,11 +52,11 @@ class NNGraphics:
         NNGraphics.show_test_dot(parameters, mu, X_norm)
 
         # initial boundary lines
-        lx1, lx2 = [low_x1, hi_x1], [31, 70]
-        plt.plot(lx1, lx2, marker = 'o', color='b')
+        # lx1, lx2 = [low_x1, hi_x1], [31, 70]
+        # plt.plot(lx1, lx2, marker = 'o', color='b')
 
-        lx1, lx2 = [3000, 7000], [100, 0]
-        plt.plot(lx1, lx2, marker = 'o', color='b')
+        # lx1, lx2 = [3000, 7000], [100, 0]
+        # plt.plot(lx1, lx2, marker = 'o', color='b')
 
         # dots
         val = np.array(Y)
