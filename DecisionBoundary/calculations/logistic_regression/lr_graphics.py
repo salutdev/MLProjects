@@ -41,6 +41,36 @@ class LRGraphics:
         plt.show()
 
     @staticmethod
+    def plot_dots2(x1, x2, Y, w, b, mu, X_norm):
+
+        low_x1 = 0
+        hi_x1 = 9000
+
+        low_x2 = 0
+        hi_x2 = 100
+
+        # Test desicion boundary
+        LRGraphics.show_test_dot(w, b, mu, X_norm)
+
+        # initial boundary line
+        lx1, lx2 = [low_x1, hi_x1], [31, 70]
+        plt.plot(lx1, lx2, marker = 'o')
+
+        lx1, lx2 = [3000, 7000], [100, 0]
+        plt.plot(lx1, lx2, marker = 'o', color='b')
+
+        # dots
+        val = np.array(Y)
+        colors = np.where(val == 1, 'g', 'r')
+        plt.scatter(x1, x2, c = colors, marker='o', alpha=1)
+
+        plt.axis([low_x1, hi_x1, low_x2, hi_x2])
+        plt.xlabel('Parameter X1')
+        plt.ylabel('Parameter X2')
+       
+        plt.show()
+
+    @staticmethod
     def show_test_dot(w, b, mu, X_norm):
         #w1, w2, b = Graphics.get_example_params_set(3)
         w1, w2 = w[0, 0], w[1, 0]
@@ -89,7 +119,7 @@ class LRGraphics:
         return (-w1 * x1 - b) / w2
 
     @staticmethod
-    def plot_dots2(x1, x2, Val):
+    def plot_dots999(x1, x2, Val):
 
         x = np.linspace(0, 10*np.pi, 100)
         y = np.sin(x)

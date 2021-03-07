@@ -18,8 +18,8 @@ class NNGradientDescent:
         X_norm = np.linalg.norm(X, axis=1, keepdims=True)
         X = X / X_norm
 
-        learning_rate = 1
-        num_iterations = 5000
+        learning_rate = 0.5
+        num_iterations = 100000
         n_h = 4
 
         parameters = self.nn_model(X, Y, n_h, num_iterations, learning_rate)
@@ -30,7 +30,7 @@ class NNGradientDescent:
 
         np.random.seed(3)
 
-        n_x, n_h, n_y = self.layer_sizes(X, Y)
+        n_x, n_y = X.shape[0], Y.shape[0]
 
         parameters = self.initialize_parameters(n_x, n_h, n_y)
 
@@ -129,12 +129,6 @@ class NNGradientDescent:
         assert(isinstance(cost, float))
 
         return cost
-
-    def layer_sizes(self, X, Y):
-        n_x = X.shape[0]
-        n_h = 4
-        n_y = Y.shape[0]
-        return (n_x, n_h, n_y)
 
     def initialize_parameters(self, n_x, n_h, n_y):
         np.random.seed(2)

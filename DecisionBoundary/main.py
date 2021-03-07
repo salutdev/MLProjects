@@ -7,8 +7,10 @@ from  calculations.neural_network.nn_algorithm import NNAlgorithm
 # Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
 
 def main():
+
     # lr = LRAlgorithm()
     # lr.calculate()
+
     nn = NNAlgorithm()
     nn.calculate()
 

@@ -7,7 +7,9 @@ class FileOperations:
         X2 = []
         Y = []
 
-        with open(fileName, "r") as dots:
+        file_path = FileOperations.get_file_path(fileName)
+
+        with open(file_path, "r") as dots:
             lines = dots.read().splitlines()
             for line in lines:
                 x1, x2, y = line.split()
@@ -18,8 +20,14 @@ class FileOperations:
         return X1, X2, Y
 
     @staticmethod
-    def write_dots_coords(X1, X2, Val):
+    def write_dots_coords(X1, X2, values, file_name):
 
-        with open('Points2.txt', 'w') as fp:
+        file_path = FileOperations.get_file_path(file_name)
+
+        with open(file_path, 'w') as fp:
             for i in range(len(X1)):
-                fp.write(f'{X1[i]} {X2[i]} {Val[i]}\n')
+                fp.write(f'{X1[i]} {X2[i]} {values[i]}\n')
+
+    @staticmethod
+    def get_file_path(file_name):
+        return f'training_sets/{file_name}'

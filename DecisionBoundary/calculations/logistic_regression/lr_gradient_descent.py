@@ -8,8 +8,8 @@ class LRGradientDescent:
     @classmethod
     def calculate_params(cls, x1, x2, y):
 
-        learning_rate = 10
-        num_iterations = 5000
+        learning_rate = 1
+        num_iterations = 50000
 
         w = np.array([[0], [0]])
         b = 0
