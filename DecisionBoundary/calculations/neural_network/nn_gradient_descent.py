@@ -23,7 +23,7 @@ class NNGradientDescent:
 
         # For ReLU
         learning_rate = 0.4
-        num_iterations = 200000
+        num_iterations = 150000
 
         # For tanh
         # learning_rate = 0.5
